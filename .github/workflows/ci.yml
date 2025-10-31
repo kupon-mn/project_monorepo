@@ -14,12 +14,12 @@ jobs:
         with: { python-version: '3.11' }
       - name: Install deps
         run: |
-          cd repo/apps/${{ matrix.service }}
+          cd apps/${{ matrix.service }}
           pip install -r requirements.txt
       - name: Lint (compile)
-        run: python -m compileall repo/apps/${{ matrix.service }}
+        run: python -m compileall apps/${{ matrix.service }}
       - name: Build Docker
         uses: docker/build-push-action@v6
         with:
-          context: repo/apps/${{ matrix.service }}
+          context: apps/${{ matrix.service }}
           push: false
