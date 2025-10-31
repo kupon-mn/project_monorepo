@@ -1,0 +1,25 @@
+name: ci
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: { service: [bff, catalog] }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install deps
+        run: |
+          cd repo/apps/${{ matrix.service }}
+          pip install -r requirements.txt
+      - name: Lint (compile)
+        run: python -m compileall repo/apps/${{ matrix.service }}
+      - name: Build Docker
+        uses: docker/build-push-action@v6
+        with:
+          context: repo/apps/${{ matrix.service }}
+          push: false

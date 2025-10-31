@@ -1,0 +1,16 @@
+services:
+  bff:
+    build:
+      context: ../apps/bff
+    environment:
+      - CATALOG_URL=http://catalog:8080
+    ports:
+      - "8000:8080"
+    depends_on:
+      - catalog
+
+  catalog:
+    build:
+      context: ../apps/catalog
+    ports:
+      - "8001:8080"
