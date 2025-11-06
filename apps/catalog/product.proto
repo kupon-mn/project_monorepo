@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package catalog.v1;
+
+service CatalogService {
+  rpc GetProduct (GetProductRequest) returns (Product);
+  rpc BatchGetProducts (BatchGetProductsRequest) returns (BatchGetProductsResponse);
+  rpc SearchProducts (SearchProductsRequest) returns (SearchProductsResponse);
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message BatchGetProductsRequest {
+  repeated string ids = 1;
+}
+
+message SearchProductsRequest {
+  string query = 1;
+  int32 limit = 2;
+}
+
+message Product {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  double price = 4;
+  string currency = 5;
+  string image_url = 6;
+}
+
+message BatchGetProductsResponse {
+  repeated Product products = 1;
+}
+
+message SearchProductsResponse {
+  repeated Product products = 1;
+}
